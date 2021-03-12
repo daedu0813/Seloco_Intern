@@ -1,6 +1,8 @@
 # 2021년 1학기 장기현장실습 (21.03.02 ~ 21.06.30)
+## 기업: [💾셀로코㈜](https://selocoinc.wixsite.com/seloco)
+### 참여: [🤗김기훈](https://github.com/daedu0813), [🤔최기환](https://github.com/kihwan1125/Resume)
 
-## OT (02.26)
+## 오리엔테이션 (02.26)
 ### 전임 인턴 마지막 세미나 참여 및 인수인계
 * 주차유도시스템 aParkings-ID(InDoor)
   - NVIDIA Jetson Nano 기반
