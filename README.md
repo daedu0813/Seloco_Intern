@@ -3,33 +3,42 @@
 ## OT (02.26)
 ### 전임 인턴 마지막 세미나 참여 및 인수인계
 * 주차유도시스템 aParkings-ID(InDoor)
-  - NVIDIA Jetson Nano 사용
-  - 객체 검출: YOLO(You Only Look Once)
+  - NVIDIA Jetson Nano 기반
+  - Object Detection: YOLO(You Only Look Once)
+  - 초음파 센서, 카메라 모듈, IoT 복합센서 이용
+    - 자동차 인지 가능 (어두우면 인식률 낮음)
+    - 전용 안드로이드 앱 개발 (진척도는 낮음, 통신은 TCP/IP)
 * 사무실 출입 관제 시스템 aDoors
-  - NVIDIA Jetson Nano 사용
-  - 객체 검출: Haar Cascades
+  - NVIDIA Jetson Nano 기반
+  - Object Detection: Haar Cascades
+  - 초음파 센서, 카메라 모듈 이용
+     - Flask 웹 프레임 워크로 프론트엔드 설정 환경 개발
+     - 수동으로 얼굴 저장 후 물체 감지 알고리즘으로 출입 시 카메라 모듈로 해당 사무실의 관계자 여부 확인
 
 ## 1주차 (03.03 ~ 03.05)
 ### 셀로코 개발 USN(Ubiquitous Sensor Network) MyUSN Station 기초 이해
-* 03.04 1차 세미나 발표 - 발표: 김기훈
+* 03.04 1차 세미나 발표 - 제작/발표: 김기훈 *[PPT](https://github.com/daedu0813/Seloco_Intern/raw/main/documents/week01/USN%20%EC%8B%9C%EC%8A%A4%ED%85%9C%20%EA%B8%B0%EC%B4%88%EC%8B%A4%EC%8A%B5%20%EB%B0%9C%ED%91%9C%20-%20%EA%B9%80%EA%B8%B0%ED%9B%88.pptx) *[PPT(최기환 제작)](https://github.com/daedu0813/Seloco_Intern/raw/main/documents/week01/USN%EB%B0%9C%ED%91%9C(%EC%B5%9C%EA%B8%B0%ED%99%98%2C%202021.03.04).pptx)
   - 유비쿼터스 센서 네트워크, SENSOS 교육 및 개발 환경
-  - 피드백: SENSOS 센서의 동작 원리, 실습 코드 분석
-  - 계획: -
+  - 피드백
+    - SENSOS 센서의 동작 원리, 실습 코드 분석
 
 ## 2주차 (03.08 ~ 03.12)
-* 03.09 2차 세미나 발표 - 발표: 최기환
+* 03.09 2차 세미나 발표 - 제작/발표: 최기환 *[PPT](https://github.com/daedu0813/Seloco_Intern/raw/main/documents/week02/5~10%EC%9E%A5%20%EB%B0%9C%ED%91%9C%EC%9E%90%EB%A3%8C.%EA%B9%80%EA%B8%B0%ED%9B%88%2C%20%EC%B5%9C%EA%B8%B0%ED%99%98.pptx)
   - USN SENSOS 시스템 기초 실습
-  - 피드백: SenTerm 실습, 18주간 계획짜기
-  - 계획: 주차 유도 시스템, 주차 예약 시스템 개발 투입 예정 (시간 남으면 안드로이드 앱 개발)
+  - 피드백
+    - SenTerm 실습, 18주간 계획짜기
+    - 주차 유도 시스템, 주차 예약 시스템 개발 투입 예정 (시간 남으면 안드로이드 앱 개발) 
 ### Jetson Nano 개발 환경 기초 및 실습
 * 03.10 Ubuntu OS 설치, 카메라 구동, 라이브러리 설치
 * 03.11
   - 아두이노 이용 초음파 센서 구동 확인
   - Jetson Nano GPIO 공부
+    - 초음파 센서 구동 실패
   - SenTerm 실습
-  - 3차 세미나 - 발표: 김기훈
-    - 피드백: 
-    - 계획: 
+    - 옵션 보드/센서를 제외한 모든 기능 확인
+  - 3차 세미나 - 제작: 최기환 / 발표: 김기훈 *[PPT](https://github.com/daedu0813/Seloco_Intern/raw/main/documents/week02/2%EC%A3%BC%EC%B0%A8%20Jetson%20Nano%2C%20Senterm%20%EC%8B%A4%EC%8A%B5%20%EB%B0%9C%ED%91%9C.pptx)
+  - 피드백
+    - 3주차까지 Jetson Nano + 초음파/도플러 센서 + 물체 감지 
 * 03.12
   - Jetson Nano 이용 초음파 센서 (SR04) 구동 성공
 ### SELCAM (VB로 개발) ➡ Python 개발 환경 설정
@@ -37,4 +46,5 @@
   - 여러개의 SenTerm 감지
   - OpenCV 등 오픈소스 이용 예정
   - YOLOv3 Object Detection 이용 예정
+
 ## 3주차 (03.15 ~ 03.19)
