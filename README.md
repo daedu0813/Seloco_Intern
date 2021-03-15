@@ -38,7 +38,7 @@
     - 초음파 센서 구동 실패
   - SenTerm 실습
     - 옵션 보드/센서를 제외한 모든 기능 확인
-  - 3차 세미나 - 제작: 최기환 / 발표: 김기훈 *[PPT](https://github.com/daedu0813/Seloco_Intern/raw/main/documents/week02/2%EC%A3%BC%EC%B0%A8%20Jetson%20Nano%2C%20Senterm%20%EC%8B%A4%EC%8A%B5%20%EB%B0%9C%ED%91%9C.pptx)
+* 3차 세미나 - 제작: 최기환 / 발표: 김기훈 *[PPT](https://github.com/daedu0813/Seloco_Intern/raw/main/documents/week02/2%EC%A3%BC%EC%B0%A8%20Jetson%20Nano%2C%20Senterm%20%EC%8B%A4%EC%8A%B5%20%EB%B0%9C%ED%91%9C.pptx)
   - 피드백
     - 3주차까지 Jetson Nano + 초음파/도플러 센서 + 물체 감지 
 * 03.12
@@ -50,3 +50,9 @@
   - YOLOv3 Object Detection 이용 예정
 
 ## 3주차 (03.15 ~ 03.19)
+### 03.15
+  - Jetson Nano + 도플러 센서(HW-M10) 구동 성공
+  - HC-SR04 초음파 센서 파이썬 코드로 재 코딩 중
+    - 초음파 센서와 도플러 센서를 같이 사용하기 위해
+  - SELCAM➡Python 이식 진행 중
+    - 소켓통신 이해와 VB코드의 이해가 중요
