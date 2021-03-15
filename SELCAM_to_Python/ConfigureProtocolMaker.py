@@ -83,8 +83,22 @@ class ConfigureProtocolMaker:
 
     def __IPto4B(address):
         temp = [0] * 4
+        pos = 0
 
         for i in range(0, 3):
             temp[i] = 0
             for k in range(0, 3):
-                if address
+                if address[pos] == 0x2E:
+                    pos = pos + 1
+                    break
+                else:
+                    temp[i] = temp[i] * 10 + (address[pos] - 0x30)
+                    pos = pos + 1
+                    if pos > (len(address) -2):
+                        break
+            if pos > (len(address) -2):
+                break
+        
+        __IPto4B = temp
+    
+                
