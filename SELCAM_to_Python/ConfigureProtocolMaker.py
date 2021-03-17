@@ -5,7 +5,7 @@ class ConfigureProtocolMaker:
         return 0
     
     def makeSearchMessage(HW_name):
-        message = bytes(20)
+        message = bytearray(20)
         tempbuff = bytes()
         protocol = bytes(10)
         
@@ -178,11 +178,11 @@ class ConfigureProtocolMaker:
         print(len(message))
         makeDHCPSettingMessage = message
 
-    def makeChangeDeviceNameMessage(Old_HW_Name, New_HW_Name):
+    # def makeChangeDeviceNameMessage(Old_HW_Name, New_HW_Name):
 
-    def makeDeviceRTCMessage(HW_Name, RTCStr):
+    # def makeDeviceRTCMessage(HW_Name, RTCStr):
 
-    def makeSEMSIPSettingMessage(HW_Name, SEMSServerIP, port):
+    # def makeSEMSIPSettingMessage(HW_Name, SEMSServerIP, port):
 
 
 #-----------------------------------------------------------------------------------#

@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\develop\Seloco_Intern\SELCAM_to_Python\env"
+VIRTUAL_ENV="C:\selcampy\Seloco_Intern\SELCAM_to_Python\env"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
