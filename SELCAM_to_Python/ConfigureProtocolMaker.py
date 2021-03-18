@@ -1,3 +1,6 @@
+from typing import Protocol
+
+
 class ConfigureProtocolMaker:
     __Protocol_Ver = "0001"
 
@@ -6,8 +9,8 @@ class ConfigureProtocolMaker:
     
     def makeSearchMessage(HW_name):
         message = bytearray(20)
-        tempbuff = bytes()
-        protocol = bytes(10)
+        tempbuff = bytearray()
+        protocol = bytearray(10)
         
         #SOF    [VB에서는 '&H' Python에서는 '0x']
         message[0] = 0xFF
@@ -49,9 +52,9 @@ class ConfigureProtocolMaker:
         makeSearchMessage = message
 
     def makeNetworkSettingMessage(HW_name, IP, subnetmask, gateway, port):
-        message = bytes(38)
-        tempbuff = bytes()
-        protocol = bytes(10)
+        message = bytearray(38)
+        tempbuff = bytearray()
+        protocol = bytearray(10)
         pos = 0
 
         #SOF
@@ -128,9 +131,9 @@ class ConfigureProtocolMaker:
         makeNetworkSettingMessage = message
 
     def makeDHCPSettingMessage(HW_name, port):
-        message = bytes(38)
-        tempbuff = bytes()
-        protocol = bytes(10)
+        message = bytearray(38)
+        tempbuff = bytearray()
+        protocol = bytearray(10)
 
         #SOF
         message[0] = 0xFF
@@ -178,17 +181,167 @@ class ConfigureProtocolMaker:
         print(len(message))
         makeDHCPSettingMessage = message
 
-    # def makeChangeDeviceNameMessage(Old_HW_Name, New_HW_Name):
+    def makeChangeDeviceNameMessage(Old_HW_Name, New_HW_Name):
+        message = bytearray(38)
+        tempbuff = bytearray()
+        protocol = bytearray()
 
-    # def makeDeviceRTCMessage(HW_Name, RTCStr):
+        #SOF
+        message[0] = 0xFF
+        message[1] = 0x53
 
-    # def makeSEMSIPSettingMessage(HW_Name, SEMSServerIP, port):
+        pos = 2
+        #Protocol version '0001'
+        protocol = StringToBytes(__Protocol_Ver)    # Protocol Verison length 4
+        message[2] = protocol[0]
+        message[3] = protocol[1]
+        message[4] = protocol[2]
+        message[5] = protocol[3]
+
+        pos = 6
+        #Data length
+        message[6] = 0
+        message[7] = 0x11
+
+        pos = 8
+        #Service Type
+        message[8] = 0x21   #Tool to device
+        #Service ID
+        message[9] = 0xA4   #Set New DeviceID command
+
+        pos = 10
+        #Data get all the node info
+        tempbuff = StringToBytes(Old_HW_Name)   #HW Name length 8
+        print("Old HW Name" + str(len(tempbuff)))
+        for i in range(0, len(tempbuff)-2):
+            message[pos] = tempbuff[i]
+            pos = pos + 1
+        
+        print("HW Pos " + str(pos))
+        message[pos] = 0x25 # %
+        pos = pos + 1
+
+        tempbuff = StringToBytes(New_HW_Name) # HW Name length 8
+        print("New HW Name " + str(len(tempbuff)))
+        for i in range(0, len(tempbuff) - 2):
+            message[pos] = tempbuff[i]
+            pos = pos + 1
+
+        #SOF
+        message[pos] = 0xFF
+        message[pos + 1] = 0x45
+        print(len(message))
+        makeChangeDeviceNameMessage = message
+
+    def makeDeviceRTCMessage(HW_Name, RTCStr):
+        message = bytearray(38)
+        tempbuff = bytearray()
+        protocol = bytearray(10)
+
+        #SOF
+        message[0] = 0xFF
+        message[1] = 0x53
+
+        pos = 2
+        #Protocol version '0001'
+        protocol = StringToBytes(__Protovol_Ver)    # Protocol verion length 4
+        message[2] = protocol[0]
+        message[3] = protocol[1]
+        message[4] = protocol[2]
+        message[5] = protocol[3]
+
+        pos = 6
+        #Data length
+        message[6] = 0
+        message[7] = 0x17
+
+        pos = 8
+        #Service Type
+        message[8] = 0x21   #Tool to device
+        #Service ID'
+        message[9] = 0xA5   #Set Device RTC
+
+        pos = 10
+        #Data get all the node info
+        tempbuff = StringToBytes(HW_Name)   #HW Name length 8
+        print("Old HW Name" + str(len(tempbuff)))
+        for i in range(0, len(tempbuff) -2):
+            message[pos] = tempbuff[i]
+            pos = pos + 1
+
+        print("hw pos: " + str(pos))
+        message[pos] = 0x25 # %
+        pos = pos + 1
+
+        tempbuff = StringToBytes(RTCStr)    # HW Name length 8
+        print("RTC" + str(len(tempbuff)))
+        for i in range(0, len(tempbuff) - 2):
+            message[pos] = tempbuff[i]
+            pos = pos + 1
+
+        #SOF
+        message[pos] = 0xFF
+        message[pos+1] = 0x45
+        print(len(message))
+        makeDeviceMessage = message
+
+    def makeSEMSIPSettingMessage(HW_Name, SEMSServerIP, port):
+        message = bytearray(35)
+        tempbuff = bytearray()
+        protocol = bytearray(10)
+
+        #SOF
+        message[0] = 0xFF
+        message[1] = 0x53
+
+        pos = 2
+        #Protocol version '0001'
+        protocol = StringToBytes(__Protocol_Ver)    # Protocol verion length 4
+        message[2] = protocol[0]
+        message[3] = protocol[1]
+        message[4] = protocol[2]
+        message[5] = protocol[3]
+
+        pos = 6
+        #Data length
+        message[6] = 0
+        message[7] = 16
+
+        pos = 8
+        #Service Type
+        message[8] = 0x21   #Tool to device
+        #Service ID
+        message[9] = 0xA2   #Set IP Command
+
+        pos = 10
+        #Data get all the node info
+        tempbuff = StringToBytes(HW_Name)
+        print("HW Name" + str(len(tempbuff)))
+
+        for i in range(0, len(tempbuff)-2):
+            message[pos] = tempbuff[i]
+            pos = pos + 1
+        print("hw pos " + str(pos))
+
+        message[pos] = 0x25 # %
+        pos = pos + 1
+
+        tempbuff = StringToBytes(SEMSServerIP)
+        tempbuff = IPto4B(tempbuff)
+        for i in range(0, len(tempbuff)-2):
+            message[pos] = tempbuff[i]
+            pos = [pos + 1]
+        print("SEMSServerIP " + str(pos))
+
+        message[pos] = 
+
+        
 
 
 #-----------------------------------------------------------------------------------#
 
     def StringToBytes(Data):
-        dataPacket = [None] * len(Data) #배열은 0부터 시작함
+        dataPacket = bytearray(len(Data))   # 배열은 0부터 시작함
         try:
             myLoop = None
             myIndex = None
@@ -206,7 +359,7 @@ class ConfigureProtocolMaker:
         StringToBytes = dataPacket
 
     def __IPto4B(address):
-        temp = [0] * 4
+        temp = bytearray(4)
         pos = 0
 
         for i in range(0, 3):
@@ -225,4 +378,4 @@ class ConfigureProtocolMaker:
         
         __IPto4B = temp
     
-                
+#-----------------------------------------------------------------------------------#
