@@ -4,6 +4,50 @@ from typing import Protocol
 class ConfigureProtocolMaker:
     __Protocol_Ver = "0001"
 
+    #-----------------------------------------------------------------------------------#
+
+    def StringToBytes(Data):
+        dataPacket = bytearray(len(Data))   # 배열은 0부터 시작함
+        try:
+            myLoop = None
+            myIndex = None
+            
+            myIndex = 0
+
+            cmdbytes = Data.encode('ascii')
+
+            for myLoop in range(0, len(Data.encode('ascii')) - 1):
+                dataPacket[myIndex] = cmdbytes[myLoop]
+                myIndex += 1
+        except:
+            print('예외 발생')
+
+        return dataPacket
+
+    def __IPto4B(address):
+        temp = bytearray(4)
+        pos = 0
+
+        for i in range(0, 3):
+            temp[i] = 0
+            for k in range(0, 3):
+                if address[pos] == 0x2E:
+                    pos = pos + 1
+                    break
+                else:
+                    temp[i] = temp[i] * 10 + (address[pos] - 0x30)
+                    pos = pos + 1
+                    if pos > (len(address) -2):
+                        break
+            if pos > (len(address) -2):
+                break
+        
+        return temp
+    
+#-----------------------------------------------------------------------------------#
+
+    # VB에서는 '&H' Python에서는 '0x'
+
     def ConfigureParsing(bytes, length):
         return 0
     
@@ -12,7 +56,7 @@ class ConfigureProtocolMaker:
         tempbuff = bytearray()
         protocol = bytearray(10)
         
-        #SOF    [VB에서는 '&H' Python에서는 '0x']
+        #SOF
         message[0] = 0xFF
         message[1] = 0x53
 
@@ -49,7 +93,7 @@ class ConfigureProtocolMaker:
         message[18] = 0xFF
         message[19] = 0x45
 
-        makeSearchMessage = message
+        return message
 
     def makeNetworkSettingMessage(HW_name, IP, subnetmask, gateway, port):
         message = bytearray(38)
@@ -128,7 +172,8 @@ class ConfigureProtocolMaker:
         message[pos] = 0xFF
         message[pos + 1] = 0x45
         print(len(message))
-        makeNetworkSettingMessage = message
+
+        return message
 
     def makeDHCPSettingMessage(HW_name, port):
         message = bytearray(38)
@@ -179,9 +224,10 @@ class ConfigureProtocolMaker:
         message[pos] = 0xFF
         message[pos + 1] = 0x45
         print(len(message))
-        makeDHCPSettingMessage = message
 
-    def makeChangeDeviceNameMessage(Old_HW_Name, New_HW_Name):
+        return message
+
+    def makeChangeDeviceNameMessage(Old_HW_name, New_HW_name):
         message = bytearray(38)
         tempbuff = bytearray()
         protocol = bytearray()
@@ -211,7 +257,7 @@ class ConfigureProtocolMaker:
 
         pos = 10
         #Data get all the node info
-        tempbuff = StringToBytes(Old_HW_Name)   #HW Name length 8
+        tempbuff = StringToBytes(Old_HW_name)   #HW Name length 8
         print("Old HW Name" + str(len(tempbuff)))
         for i in range(0, len(tempbuff)-2):
             message[pos] = tempbuff[i]
@@ -221,7 +267,7 @@ class ConfigureProtocolMaker:
         message[pos] = 0x25 # %
         pos = pos + 1
 
-        tempbuff = StringToBytes(New_HW_Name) # HW Name length 8
+        tempbuff = StringToBytes(New_HW_name) # HW Name length 8
         print("New HW Name " + str(len(tempbuff)))
         for i in range(0, len(tempbuff) - 2):
             message[pos] = tempbuff[i]
@@ -231,9 +277,10 @@ class ConfigureProtocolMaker:
         message[pos] = 0xFF
         message[pos + 1] = 0x45
         print(len(message))
-        makeChangeDeviceNameMessage = message
 
-    def makeDeviceRTCMessage(HW_Name, RTCStr):
+        return message
+
+    def makeDeviceRTCMessage(HW_name, RTCStr):
         message = bytearray(38)
         tempbuff = bytearray()
         protocol = bytearray(10)
@@ -263,7 +310,7 @@ class ConfigureProtocolMaker:
 
         pos = 10
         #Data get all the node info
-        tempbuff = StringToBytes(HW_Name)   #HW Name length 8
+        tempbuff = StringToBytes(HW_name)   #HW Name length 8
         print("Old HW Name" + str(len(tempbuff)))
         for i in range(0, len(tempbuff) -2):
             message[pos] = tempbuff[i]
@@ -283,9 +330,10 @@ class ConfigureProtocolMaker:
         message[pos] = 0xFF
         message[pos+1] = 0x45
         print(len(message))
-        makeDeviceMessage = message
 
-    def makeSEMSIPSettingMessage(HW_Name, SEMSServerIP, port):
+        return message
+
+    def makeSEMSIPSettingMessage(HW_name, SEMSServerIP, port):
         message = bytearray(35)
         tempbuff = bytearray()
         protocol = bytearray(10)
@@ -315,7 +363,7 @@ class ConfigureProtocolMaker:
 
         pos = 10
         #Data get all the node info
-        tempbuff = StringToBytes(HW_Name)
+        tempbuff = StringToBytes(HW_name)
         print("HW Name" + str(len(tempbuff)))
 
         for i in range(0, len(tempbuff)-2):
@@ -332,50 +380,23 @@ class ConfigureProtocolMaker:
             message[pos] = tempbuff[i]
             pos = [pos + 1]
         print("SEMSServerIP " + str(pos))
+        
+        message[pos] = 0x25 # %
+        pos = pos + 1
 
-        message[pos] = 
+        message[pos] = port // 256
+        message[pos + 1] = port % 256
+        print('port')
+        pos = pos + 2
+
+        #SOF
+        message[pos] = 0xFF
+        message[pos+1] = 0x45
+        print(len(message))
+
+        return message
+        
 
         
 
 
-#-----------------------------------------------------------------------------------#
-
-    def StringToBytes(Data):
-        dataPacket = bytearray(len(Data))   # 배열은 0부터 시작함
-        try:
-            myLoop = None
-            myIndex = None
-            
-            myIndex = 0
-
-            cmdbytes = Data.encode('ascii')
-
-            for myLoop in range(0, len(Data.encode('ascii')) - 1):
-                dataPacket[myIndex] = cmdbytes[myLoop]
-                myIndex += 1
-        except:
-            print('예외 발생')
-
-        StringToBytes = dataPacket
-
-    def __IPto4B(address):
-        temp = bytearray(4)
-        pos = 0
-
-        for i in range(0, 3):
-            temp[i] = 0
-            for k in range(0, 3):
-                if address[pos] == 0x2E:
-                    pos = pos + 1
-                    break
-                else:
-                    temp[i] = temp[i] * 10 + (address[pos] - 0x30)
-                    pos = pos + 1
-                    if pos > (len(address) -2):
-                        break
-            if pos > (len(address) -2):
-                break
-        
-        __IPto4B = temp
-    
-#-----------------------------------------------------------------------------------#

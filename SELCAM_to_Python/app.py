@@ -3,36 +3,55 @@ import time
 import threading
 import io
 import atexit
+import ConfigureProtocolMaker
+import ipaddress
 
 from flask import Flask
 app = Flask(__name__)
 
-from collections import namedtuple
-Device = namedtuple("Device", "device_name ip subnetmask gateway port")
-defaultDevice = Device("SenTerm", "192.168.0.254", "255.255.255.0", "192.168.0.1", 19860)
-#selectedDevice
-#deviceList
+from dataclasses import dataclass 
 
-__udpbroadcaster = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-__udpbroadcaster.connect((defaultDevice.ip, defaultDevice.port))
-TCP_client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-#__udpbroadcasterEndpoint
-
-
+# Flask 라우트
 @app.route("/")
 def home():
-    
     return "Hello, Flask!"
 
 @app.route("/seloco/")
 def info():
     return "Hello, Seloco!"
 
+# MAIN
+if __name__ == "__main__":
+    @dataclass
+    class Device:
+        device_name: str = None
+        ip = bytearray()
+        subnetmask = bytearray()
+        gateway = bytearray()
+        port: int = None
+    
+    selectedDevice = Device()
+    deviceList = list()
+
+    __UDPbroadcaster = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    __UDPbroadcasterEndpoint = __UDPbroadcaster.bind(ipaddress, 19860)
+    __broadcasts_Address = ipaddress.ip_address('255.255.255.255')
+
+    TCPListenthread : threading.Thread
+    TCP_Client_Socket : socket
+    UDPListenThread : threading.Thread
+    configMaker : ConfigureProtocolMaker
+    #__udpbroadcaster.connect((defaultDevice.ip, defaultDevice.port))
+    # TCP_client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    #__udpbroadcasterEndpoint
+
+    app.run()
+
 # 프로그램 종료시
 @atexit.register
 def goodbye():
     print('Close Socket')
-    try:
-        __udpbroadcaster.close()    # 소켓 닫는다
-    except:
-        print('예외 발생')
+    # try:
+    #     __udpbroadcaster.close()    # 소켓 닫는다
+    # except:
+    #     print('예외 발생')
