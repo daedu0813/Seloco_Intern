@@ -1,5 +1,8 @@
 from collections import namedtuple
-from dataclasses import dataclass 
+from dataclasses import dataclass
+from ipaddress import ip_address
+import ipaddress 
+import socket
 
 arr = [1,2,3,"11","22", 0xFF]
 
@@ -33,3 +36,7 @@ print(abc)
 
 # for i in barr:
 #     print(i)
+
+exhex = 0x00
+
+print(exhex.encode('ascii'))
