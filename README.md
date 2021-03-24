@@ -69,4 +69,6 @@
  * 03.22
    - ATmega8 기초지식 공부
  * 03.23
-    - LM, SIC, LED 모듈에 AtmelStudio 6.2 버전을 이용해 elf파일 
+    - LM, SIC, LED 모듈에 AtmelStudio 6.2 버전을 이용해 elf파일 집어넣기
+ * 03.24
+    - ATmega8에 LED, Switch, 7-Segment 
